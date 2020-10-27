@@ -1,28 +1,60 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Encabezado>GIMNASIO</Encabezado>
+
+    <form-task @new-task='newTask'></form-task>
+    Cantidad de Tareas:{{cantidadTareas}}
+    <List :tareas='listaTareas' @eliminar='deleteTask'></List>
+
+    <pie-pagina></pie-pagina>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import './assets/bootstrap.min.css';
+import Encabezado from './components/Encabezado';
+import PiePagina from './components/PiePagina';
+import FormTask from './components/FormTask';
+import List from './components/List';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Encabezado,
+    FormTask,
+    List,
+    PiePagina
+  },
+  data (){
+    return {
+      listaTareas:[],
+      cantidadTareas:0,
+    }
+  },
+    methods:{
+    newTask(task){
+      if(this.task == '') return false;
+      this.listaTareas.push (task);
+    },
+    deleteTask(key){
+      this.listaTareas.splice(key,1);
+    }
+  },
+  watch: {
+    listaTareas(valor){
+      this.cantidadTareas = valor.length
+
+    }
+  },
 }
+
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color:#003049;
+    text-align:center;
+    color: blanchedalmond;
+  }
 </style>
